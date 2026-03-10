@@ -1,0 +1,59 @@
+Stage	Area	Topics to Cover	Tools / Libraries	Tools / Libraries
+1	Programming Base	"Python fundamentals, functions, OOP, file handling"	Python	Python
+2	Mathematics Foundation	"Vectors, matrices, derivatives, gradients, probability distributions, expectation"	"Linear Algebra, Probability Theory, Statistics, Calculus"	"Linear Algebra, Probability Theory, Statistics, Calculus"
+3	Data Analysis	"Data cleaning, data visualization, data manipulation"	"NumPy, Pandas, Matplotlib"	"NumPy, Pandas, Matplotlib"
+4	ML Workflow	"Data collection, preprocessing, feature engineering, model training, evaluation, deployment"	Python ecosystem	Python ecosystem
+5	Supervised Learning	"Linear Regression, Logistic Regression, Decision Trees, Random Forest, Support Vector Machines, KNN, Naive Bayes"	Scikit-learn	Scikit-learn
+6	Model Evaluation	"Accuracy, Precision, Recall, F1-score, Confusion Matrix, Cross-validation"	Scikit-learn tools	Scikit-learn tools
+7	Unsupervised Learning	"K-Means Clustering, Hierarchical Clustering, DBSCAN, PCA"	Scikit-learn	Scikit-learn
+8	Reinforcement Learning	"Agent, Environment, Reward, Policy, Value function, Q-learning, Deep Q Networks, Policy Gradient"	OpenAI Gym	OpenAI Gym
+9	Deep Learning	"Neural Networks, CNN, RNN, Backpropagation"	"TensorFlow, PyTorch"	"TensorFlow, PyTorch"
+10	Projects & Practice	"House price prediction, spam classifier, movie recommendation system, customer segmentation"	"Kaggle, UCI Machine Learning Repository"	"Kaggle, UCI Machine Learning Repository"
+				
+				
+				
+				
+				
+				
+				
+	Field	Top Elementary Topics to Know	Why It Matters in ML	
+	Linear Algebra	"Vectors, vector operations, dot product"	Represents features and data points	
+		"Matrices, matrix multiplication"	Used to store datasets and model parameters	
+		Transpose of matrix	Used in many ML formulas	
+		Matrix dimensions	Important for model computations	
+		Eigenvalues & Eigenvectors (basic idea)	Used in PCA and dimensionality reduction	
+	Calculus	Derivatives	Measure rate of change of loss function	
+		Partial derivatives	Used when many variables exist	
+		Gradient	Direction to minimize loss	
+		Chain rule	Core idea behind backpropagation	
+	Probability Theory	Random variables	Represent uncertain outcomes	
+		Conditional probability	Used in classification models	
+		Bayes theorem	Core idea of Naive Bayes classifier	
+		Probability distributions	Understand data behavior	
+	Statistics	Mean	Average of dataset	
+		Variance	Data spread	
+		Standard deviation	Measure variability	
+		Normal distribution	Many ML assumptions follow this	
+		Correlation	Relationship between features	
+				
+				
+	Library	Topic	What You Need to Know	
+	NumPy	Arrays	"Creating arrays, array shapes"	
+		Indexing & Slicing	"Access specific elements, subarrays"	
+		Mathematical Operations	"sum, mean, std, min, max"	
+		Vectorized Operations	Element-wise operations without loops	
+		Broadcasting	Operations on arrays of different shapes	
+		Reshape & Transpose	"Reshape arrays, transpose matrices"	
+		Random Number Generation	"randint, rand, normal, seed"	
+	Pandas	DataFrames & Series	"Creating, accessing, modifying data"	
+		Reading/Writing Data	"read_csv, read_excel, to_csv, to_excel"	
+		Indexing & Selecting Data	"loc, iloc, boolean indexing"	
+		Filtering Data	Conditions on columns	
+		Handling Missing Values	"fillna(), dropna()"	
+		GroupBy Operations	"groupby(), aggregate()"	
+		Sorting & Ranking	"sort_values(), rank()"	
+		Merging & Joining	"merge(), concat(), join()"	
+		Feature Scaling	"min-max scaling, standardization"	
+	Data Visualization (Basic)	Matplotlib Basics	"plot(), scatter(), hist(), bar()"	
+		Customizing Plots	"title, xlabel, ylabel, legend"	
+		Simple Insights	"trend lines, outliers"	
