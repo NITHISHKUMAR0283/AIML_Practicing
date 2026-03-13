@@ -1,5 +1,5 @@
-import math
-import numpy as np
+# import math
+# import numpy as np
 # data = [10, 20, 30, 40, 50]
 # max = max(data)
 # min = min(data)
@@ -35,3 +35,34 @@ import numpy as np
 # b = a.reshape(2,-1)
 # print(b)
 # print(a.T)
+
+# print(np.random.randint(1,10))
+
+# print(np.random.randint(1,1000,size=(2,7)))
+
+# print(np.random.rand(2,3))
+# print(np.random.normal(0,1,(5,5)))
+
+# np.random.seed(42)
+# print(np.random.rand())
+# print(np.random.rand())
+
+# import pandas as pd
+
+# df = pd.read_csv("./Titanic-Dataset.csv")
+# print(df.describe())
+# print(df.duplicated().sum())
+# df["Age"].fillna(df["Age"].mean(),inplace=True)
+# print(df.duplicated().sum())
+# print(df.isnull().sum())
+
+# survived = df[(df["Survived"]==0 )& (df["Sex"]=="female")]
+# print(survived)
+
+# sorted =df.sort_values(["Age","Fare"],ascending=[True,False])
+# print(sorted)
+# group = df.groupby("Pclass").size()
+# print(group)
+
+
+
