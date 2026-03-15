@@ -1,5 +1,9 @@
-# import math
-# import numpy as np
+import math
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("./Titanic-Dataset.csv")
 # data = [10, 20, 30, 40, 50]
 # max = max(data)
 # min = min(data)
@@ -47,9 +51,7 @@
 # print(np.random.rand())
 # print(np.random.rand())
 
-# import pandas as pd
 
-# df = pd.read_csv("./Titanic-Dataset.csv")
 # print(df.describe())
 # print(df.duplicated().sum())
 # df["Age"].fillna(df["Age"].mean(),inplace=True)
@@ -65,4 +67,12 @@
 # print(group)
 
 
+# df["AgeGroup"]=df["Age"].apply(lambda x: "Child" if x<18 else "Adult")
+# print(df[(df["AgeGroup"]=="Child")])
 
+
+plt.plot([1,2,3,4],[5,6,7,8])
+plt.title("Sample")
+plt.xlabel("samplex")
+plt.ylabel("sampley")
+plt.show()
