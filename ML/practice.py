@@ -2,6 +2,7 @@ import math
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 df = pd.read_csv("./Titanic-Dataset.csv")
 # data = [10, 20, 30, 40, 50]
@@ -71,8 +72,42 @@ df = pd.read_csv("./Titanic-Dataset.csv")
 # print(df[(df["AgeGroup"]=="Child")])
 
 
-plt.plot([1,2,3,4],[5,6,7,8])
-plt.title("Sample")
-plt.xlabel("samplex")
-plt.ylabel("sampley")
-plt.show()
+# plt.plot([1,2,3,4],[5,6,7,8])
+# df['Pclass'].value_counts().plot(kind='bar', color='orange')
+# plt.title("Sample")
+# plt.xlabel("samplex")
+# plt.ylabel("sampley")
+# plt.show()
+
+# sns.countplot(data=df, x="Pclass",hue="Age")
+# sns.scatterplot(x="Age",y="Fare",data=df,hue="Pclass",palette='viridis')
+# corr = df.select_dtypes(include=['number']).corr()
+# sns.heatmap(corr,annot=True,cmap='coolwarm')
+# plt.show()
+# sns.histplot(data=df,x="Age",bins=10)
+# plt.show()
+# sns.boxplot(data=df,x="Age")
+# plt.show()
+# sns.scatterplot(data=df,x="Age",y="Fare")
+# plt.show()
+# sns.pairplot(data=df,x_vars=df.columns,y_vars=df.columns)
+# plt.show()
+
+# Data Preprocessing
+
+# print(df.info)
+# print(df.describe())
+# print(df.head())
+
+# Q1= df["Age"].quantile(0.25)
+# Q3= df["Age"].quantile(0.75)
+
+# IQR = Q3-Q1
+
+# min = Q1-1.5*IQR
+# max = Q3+1.5*IQR
+
+# outliers = (df[((df["Age"]>max) | (df["Age"]<min))])
+
+
+
