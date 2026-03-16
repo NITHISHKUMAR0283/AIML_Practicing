@@ -111,3 +111,7 @@ df = pd.read_csv("./Titanic-Dataset.csv")
 
 
 
+
+# Removing missing values
+df=df.dropna()
+print(df.isnull().sum().sum())
