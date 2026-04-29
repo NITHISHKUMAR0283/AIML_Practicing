@@ -1,46 +1,104 @@
-import numpy as np
-import matplotlib.pyplot as pt
-from mpl_toolkits.mplot3d import Axes3D
-from sklearn.linear_model import LinearRegression
-from sklearn.datasets import fetch_california_housing
-import pandas as pd
+import numpy as np 
+import matplotlib.pyplot as plt
 
-df = pd.DataFrame({
-    'area': [800, 1000, 1200, 1500, 1800, 2000],
-    'bedrooms': [1, 2, 2, 3, 3, 4],
-    'price': [2, 3, 3.5, 5, 6, 7]
-})
-X = df[['area','bedrooms']]
-y = df['price']
-model = LinearRegression()
-model.fit(X,y)
+from matplotlib import animation
 
-y_predict = model.predict(X)
-print(model.coef_)
-print(model.intercept_)
+X = np.random.randint(1, 10, size=5)     
+Y = np.random.randint(-100, 0, size=5)
+X = (X - X.mean()) / X.std()
+Y = (Y - Y.mean()) / Y.std()
+w = np.random.random()
+b = np.random.random()
 
-# Create 3D plot
-fig = pt.figure(figsize=(10, 7))
+epoch = 1000
+lr = 0.01
+n = len(X)
+
+w_history = []
+b_history = []
+loss_history = []
+
+
+for i in range(epoch):
+    
+    y_pred = w*X + b
+    dw = (-2/n) * np.sum(X*(Y-y_pred))
+    db = (-2/n) * np.sum((Y - y_pred))
+    b = b - lr * db
+    w = w-(lr*dw)
+    
+    y_pred = w*X + b
+    loss = (1/n) * np.sum((Y - y_pred)**2)
+    if i % 100 == 0:
+        print(f"Epoch {i}, Loss: {loss}")
+
+    w_history.append(w)
+    b_history.append(b)
+    loss_history.append(loss)
+
+    
+w_vals = np.linspace(-2, 2, 50)
+b_vals = np.linspace(-2, 2, 50)
+
+W, B = np.meshgrid(w_vals, b_vals)
+Z = np.zeros_like(W)
+
+for i in range(W.shape[0]):
+    for j in range(W.shape[1]):
+        y_pred = W[i,j]*X + B[i,j]
+        Z[i,j] = (1/n) * np.sum((Y - y_pred)**2)
+
+
+fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
-# Plot actual data points
-ax.scatter(X['area'], X['bedrooms'], y, color='red', s=100, label='Actual prices')
+# Surface
+ax.plot_surface(W, B, Z, alpha=0.6)
 
-# Create mesh grid for the plane
-area_range = np.linspace(X['area'].min(), X['area'].max(), 10)
-bedrooms_range = np.linspace(X['bedrooms'].min(), X['bedrooms'].max(), 10)
-area_mesh, bedrooms_mesh = np.meshgrid(area_range, bedrooms_range)
+# Path (initial)
+point, = ax.plot([], [], [], 'ro-', markersize=4)
 
-# Predict prices for mesh
-mesh_points = np.c_[area_mesh.ravel(), bedrooms_mesh.ravel()]
-price_mesh = model.predict(mesh_points).reshape(area_mesh.shape)
+ax.set_xlabel("w")
+ax.set_ylabel("b")
+ax.set_zlabel("Loss")
+ax.set_title("Gradient Descent on Loss Surface")
 
-# Plot the regression plane
-ax.plot_surface(area_mesh, bedrooms_mesh, price_mesh, alpha=0.5, cmap='viridis', label='Regression plane')
+# Animation function
+def update(frame):
+    point.set_data(w_history[:frame], b_history[:frame])
+    point.set_3d_properties(loss_history[:frame])
+    return point,
 
-ax.set_xlabel('Area')
-ax.set_ylabel('Bedrooms')
-ax.set_zlabel('Price')
-ax.set_title('Linear Regression Plane')
-pt.show()
+ani = animation.FuncAnimation(
+    fig, update, frames=len(w_history), interval=100, blit=False
+)
 
+plt.show()
+
+
+plt.figure()
+plt.plot(loss_history)
+plt.xlabel("Iteration")
+plt.ylabel("Loss")
+plt.title("Loss decreasing over time")
+plt.show()
+
+
+fig2, ax2 = plt.subplots()
+
+ax2.scatter(X, Y)
+line, = ax2.plot(X, w_history[0]*X + b_history[0])
+
+ax2.set_title("Line Fitting Over Time")
+
+def update_line(frame):
+    y_pred = w_history[frame] * X + b_history[frame]
+    line.set_ydata(y_pred)
+    ax2.set_title(f"Iteration {frame}")
+    return line,
+
+ani2 = animation.FuncAnimation(
+    fig2, update_line, frames=len(w_history), interval=50, blit=False
+)
+
+plt.show()
