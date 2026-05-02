@@ -14,43 +14,49 @@ y = w1x1 + w2x2 + ... + wnxn + b
 
 ---
 
-### Loss Function (Mean Squared Error)
+### Loss Function
 
-1. For reducing the loss, we try random values at first
+Loss function applied on:
 
-2. Calculate the predicted value for all the rows in the data
+```id="lr2"
+y = w1x1 + w2x2 + ... + wnxn + b
+```
+
+1. For reducing the loss we try random values at first
+
+2. Calculate the value for all the rows in the data
 
 3. Measure the vertical error:
 
-```id="lr2"
+```id="lr3"
 (y - y_pred)   → residual
 ```
 
-4. Square this error:
+4. Square this:
 
 * to get magnitude
-* to punish larger errors more
+* to punish greater error to greater extent
 
 5. Add all errors for individual rows and find the mean
 
 ---
 
-👉 This loss function forms a **bowl-shaped geometry (convex curve)**
+👉 This loss function is a **bowl-shaped geometry (convex)**
 
 ---
 
-### Gradient Descent (works on derivatives)
+### Gradient Descent (works on derivative)
 
-1. Find the change in weights and bias:
+1. Find the net change of weights and bias:
 
-```id="lr3"
+```id="lr4"
 dw = ∂L/∂w  
 db = ∂L/∂b
 ```
 
-2. Update parameters:
+2. Update the parameters:
 
-```id="lr4"
+```id="lr5"
 w = w - lr * dw  
 b = b - lr * db
 ```
@@ -58,16 +64,16 @@ b = b - lr * db
 3. Gradient gives the direction of **steepest increase of loss**
 
 * we take the opposite direction
-* and move downward
-* reaching the minimum possible value
+* make it move downwards
+* reaching the minimum value possible
 
 ---
 
 ### Final Outcome
 
-We obtain the most suitable:
+Finally, we get the most suitable:
 
-```id="lr5"
+```id="lr6"
 w1, w2, ... , wn and b
 ```
 
@@ -75,12 +81,8 @@ w1, w2, ... , wn and b
 
 ### Prediction
 
-Using the learned weights and bias:
+With the above vector ( w ) and ( b ), we can predict the values of unseen data:
 
-```id="lr6"
+```id="lr7"
 y_pred = w1x1 + w2x2 + ... + wnxn + b
 ```
-
-👉 We can now predict values for unseen data
-
----
