@@ -1,36 +1,86 @@
-finding a line which matches with the distribution of features given to the model
+# Linear Regression
 
-using that line we try to predict the unseen data
+Finding a line which matches with the distribution of features given to the model
 
-loss function applied on y=w1x1 + w2x2+ ...+ wnxn +b , 
+Using that line we try to predict the unseen data
 
-    1. for reducing the loss we try random values at first 
+---
 
-    2. calculate the value for all the rows in the data
+### Model
 
-    3. measure the vertical error (y-y_pred) [resudial]
+```id="lr1"
+y = w1x1 + w2x2 + ... + wnxn + b
+```
 
-    4. square this to get the magnitude and punish the greater error to greater extent
+---
 
-    5. add all this error for individual rows and and find the mean 
+### Loss Function (Mean Squared Error)
 
-this loss function is a  bowl shaped geomentry
+1. For reducing the loss, we try random values at first
 
-Gradient Descent (works on derivative):
+2. Calculate the predicted value for all the rows in the data
 
-    1. we find the net change of weights and net change of bias by finding dw and dl 
+3. Measure the vertical error:
 
-    2. update the w and l 
+```id="lr2"
+(y - y_pred)   → residual
+```
 
-            w = w - lr * dw
+4. Square this error:
 
-            b = b - lr * db
+* to get magnitude
+* to punish larger errors more
 
+5. Add all errors for individual rows and find the mean
 
-    3. Gradient gives the direction of steepest increase of loss , we find the component contribution dw and db and we take the opposite ,
-     make it to climb down reaching the minimum value possible 
+---
 
-finally you have the most suitable W1,W2,...Wn and b 
+👉 This loss function forms a **bowl-shaped geometry (convex curve)**
 
-with the above vector w and b we can predict the values of a unseen data .
+---
 
+### Gradient Descent (works on derivatives)
+
+1. Find the change in weights and bias:
+
+```id="lr3"
+dw = ∂L/∂w  
+db = ∂L/∂b
+```
+
+2. Update parameters:
+
+```id="lr4"
+w = w - lr * dw  
+b = b - lr * db
+```
+
+3. Gradient gives the direction of **steepest increase of loss**
+
+* we take the opposite direction
+* and move downward
+* reaching the minimum possible value
+
+---
+
+### Final Outcome
+
+We obtain the most suitable:
+
+```id="lr5"
+w1, w2, ... , wn and b
+```
+
+---
+
+### Prediction
+
+Using the learned weights and bias:
+
+```id="lr6"
+y_pred = w1x1 + w2x2 + ... + wnxn + b
+```
+
+👉 We can now predict values for unseen data
+
+---
