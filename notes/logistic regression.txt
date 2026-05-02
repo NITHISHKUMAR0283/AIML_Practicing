@@ -1,0 +1,56 @@
+logistic regression
+
+z = weighted combination (raw score) 
+y_pred =σ(z) = actual prediction (probability)
+
+same equation as linear regression z = w1x1 + w2x2 +....+wnxn + bias
+
+loss function differs , applied on sigmoid of (z)
+
+
+    y_pred = sigmoid(z)
+
+    l = - ((y) * log(y_pred) + (1-y) * log (1-y_pred))
+
+case 1 :
+    if y = 1 :
+    
+     i. y_pred = 1
+
+            loss = 0
+     
+     ii. y_pred = 0
+
+            loss = inf
+
+case 2:
+    if y=0 :
+    
+        i. y_pred = 1
+
+            loss = inf
+
+        ii. y_pred = 0
+
+            loss = 0
+
+using the same gradient descent we try to minimise this error function
+
+we will get the value f w1,w2, ... wn and b 
+
+now we get the z value of a unseen row / data , using this w and b , which gives the value (wighted combination of inputs)
+
+we use sigmoid for probability
+
+        1/1+e^-z
+
+
+the gradient descent form the weights and b such that it will try to put one class in one side and another class on another side,
+
+linear decision boundary in feature space based on w and b
+
+ex:
+
+    if y_pred>=0.5 class 1;
+
+    else class 2;
