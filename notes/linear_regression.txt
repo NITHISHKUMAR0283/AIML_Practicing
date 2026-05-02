@@ -1,0 +1,36 @@
+finding a line which matches with the distribution of features given to the model
+
+using that line we try to predict the unseen data
+
+loss function applied on y=w1x1 + w2x2+ ...+ wnxn +b , 
+
+    1. for reducing the loss we try random values at first 
+
+    2. calculate the value for all the rows in the data
+
+    3. measure the vertical error (y-y_pred) [resudial]
+
+    4. square this to get the magnitude and punish the greater error to greater extent
+
+    5. add all this error for individual rows and and find the mean 
+
+this loss function is a  bowl shaped geomentry
+
+Gradient Descent (works on derivative):
+
+    1. we find the net change of weights and net change of bias by finding dw and dl 
+
+    2. update the w and l 
+
+            w = w - lr * dw
+
+            b = b - lr * db
+
+
+    3. Gradient gives the direction of steepest increase of loss , we find the component contribution dw and db and we take the opposite ,
+     make it to climb down reaching the minimum value possible 
+
+finally you have the most suitable W1,W2,...Wn and b 
+
+with the above vector w and b we can predict the values of a unseen data .
+
