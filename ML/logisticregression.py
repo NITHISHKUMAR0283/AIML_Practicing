@@ -3,21 +3,31 @@ import matplotlib.pyplot as plt
 from matplotlib import animation
 from sklearn.datasets import load_breast_cancer
 from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix
 
 # -----------------------
 # DATA
 # -----------------------
 data = load_breast_cancer()
+
+
 X = data.data
 y = data.target
 
+x_train,x_test ,y_train , y_test = train_test_split(X,y,test_size=0.2,random_state=42)
+
 # scale features
-X = StandardScaler().fit_transform(X)
+scaler = StandardScaler()
+x_train = scaler.fit_transform(x_train)
+x_test = scaler.transform(x_test)
+
+
 
 # -----------------------
 # INIT PARAMETERS
 # -----------------------
-w = np.zeros(X.shape[1])
+w = np.zeros(x_train.shape[1])
 b = 0
 
 lr = 0.1
@@ -33,16 +43,16 @@ def sigmoid(z):
 # TRAINING LOOP
 # -----------------------
 for i in range(epoch):
-    z = np.dot(X, w) + b
+    z = np.dot(x_train, w) + b
     y_pred = sigmoid(z)
 
-    dw = (1 / len(X)) * np.dot(X.T, (y_pred - y))
-    db = (1 / len(X)) * np.sum(y_pred - y)
+    dw = (1 / len(x_train)) * np.dot(x_train.T, (y_pred - y_train))
+    db = (1 / len(x_train)) * np.sum(y_pred - y_train)
 
     w -= lr * dw
     b -= lr * db
 
-    loss = -np.mean(y*np.log(y_pred + 1e-9) + (1-y)*np.log(1-y_pred + 1e-9))
+    loss = -np.mean(y_train*np.log(y_pred + 1e-9) + (1-y_train)*np.log(1-y_pred + 1e-9))
 
     loss_history.append(loss)
     z_history.append(z.copy())
@@ -61,56 +71,42 @@ plt.ylabel("Loss")
 plt.grid(True)
 plt.show()
 
-# -----------------------
-# Z-SPACE ANIMATION
-# -----------------------
-fig, ax = plt.subplots(figsize=(14, 6))
+# testing model 
 
-x_idx = np.arange(len(y))
+z_test = np.dot(x_test,w)+b
+y_pred_test = sigmoid(z_test)
 
-# stable axis range
-all_z = np.concatenate(z_history)
-z_min, z_max = all_z.min(), all_z.max()
+y_pred_labels = (y_pred_test >= 0.5).astype(int)
 
-sc0 = ax.scatter([], [], color='red', label='Class 0')
-sc1 = ax.scatter([], [], color='blue', label='Class 1')
-line = ax.axhline(0, color='black')
 
-ax.set_xlim(0, len(y))
-ax.set_ylim(z_min - 2, z_max + 2)
+accuracy = np.mean(y_pred_labels == y_test)
 
-ax.set_title("Z-space Evolution in Logistic Regression")
-ax.set_xlabel("Sample Index")
-ax.set_ylabel("z value")
-ax.legend()
+print(f"accuracy: {accuracy}")
 
-# -----------------------
-# UPDATE FUNCTION
-# -----------------------
-def update(frame):
-    z = z_history[frame]
+indices = np.arange(len(y_test))
 
-    sc0.set_offsets(np.c_[x_idx[y == 0], z[y == 0]])
-    sc1.set_offsets(np.c_[x_idx[y == 1], z[y == 1]])
+plt.figure(figsize=(10,5))
 
-    ax.set_title(f"Z-space at Epoch {frame}")
+# Class 0
+plt.scatter(indices[y_test == 0], 
+            y_pred_test[y_test == 0], 
+            color='blue', alpha=0.5, label='Actual Class 0')
 
-    return sc0, sc1, line
+# Class 1
+plt.scatter(indices[y_test == 1], 
+            y_pred_test[y_test == 1], 
+            color='orange', alpha=0.5, label='Actual Class 1')
 
-# -----------------------
-# ANIMATION
-# -----------------------
-ani = animation.FuncAnimation(
-    fig,
-    update,
-    frames=len(z_history),
-    interval=100,
-    blit=False,
-     repeat=False
-)
-plt.scatter(range(len(z)), z, c=y, cmap='bwr')
-plt.axhline(0, color='black')
-plt.title("z separated by class")
-plt.xlabel("Sample index")
-plt.ylabel("z")
+# Wrong predictions
+wrong = (y_pred_labels != y_test)
+plt.scatter(indices[wrong], 
+            y_pred_test[wrong], 
+            color='red', s=80, label='Wrong')
+
+plt.axhline(0.5, color='black', linestyle='--')
+
+plt.title("Predictions with Errors Highlighted")
+plt.xlabel("Sample Index")
+plt.ylabel("Predicted Probability")
+plt.legend()
 plt.show()
