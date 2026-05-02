@@ -1,56 +1,125 @@
-logistic regression
+# Logistic Regression
 
-z = weighted combination (raw score) 
-y_pred =σ(z) = actual prediction (probability)
+```
+z      = weighted combination (raw score)
+y_pred = σ(z) = actual prediction (probability)
+```
 
-same equation as linear regression z = w1x1 + w2x2 +....+wnxn + bias
+---
 
-loss function differs , applied on sigmoid of (z)
+Sigmoid → S-shaped (non-linear, non-convex when used in MSE)
+Log     → compresses values and bends curves
 
+---
 
-    y_pred = sigmoid(z)
+### The function:
 
-    l = - ((y) * log(y_pred) + (1-y) * log (1-y_pred))
+```
+−log(σ(z))
+```
 
-case 1 :
-    if y = 1 :
-    
-     i. y_pred = 1
+is convex because:
 
-            loss = 0
-     
-     ii. y_pred = 0
+* Sigmoid + log combination produces a function whose second derivative ≥ 0
+* That’s the formal definition of convexity
 
-            loss = inf
+Log reshapes the curve so that:
 
-case 2:
-    if y=0 :
-    
-        i. y_pred = 1
+* No bumps
+* No multiple minima
+* Always curves upward
 
-            loss = inf
+👉 That’s convexity
 
-        ii. y_pred = 0
+---
 
-            loss = 0
+If MSE is used, this becomes a **non-convex graph**, so gradient descent may not work properly.
 
-using the same gradient descent we try to minimise this error function
+---
 
-we will get the value f w1,w2, ... wn and b 
+### Model (same as linear regression)
 
-now we get the z value of a unseen row / data , using this w and b , which gives the value (wighted combination of inputs)
+```
+z = w1x1 + w2x2 + ... + wnxn + bias
+```
 
-we use sigmoid for probability
+---
 
-        1/1+e^-z
+### Loss function (applied on sigmoid(z))
 
+```
+y_pred = sigmoid(z)
 
-the gradient descent form the weights and b such that it will try to put one class in one side and another class on another side,
+L = - ( (y) * log(y_pred) + (1 - y) * log(1 - y_pred) )
+      ----> convex graph having one global minimum
+```
 
-linear decision boundary in feature space based on w and b
+---
 
-ex:
+### Loss Intuition
 
-    if y_pred>=0.5 class 1;
+#### Case 1: y = 1
 
-    else class 2;
+```
+i.   y_pred = 1   → loss = 0
+ii.  y_pred = 0   → loss = inf
+```
+
+---
+
+#### Case 2: y = 0
+
+```
+i.   y_pred = 1   → loss = inf
+ii.  y_pred = 0   → loss = 0
+```
+
+---
+
+### Optimization
+
+Using the same gradient descent, we try to minimise this error function.
+
+We will get the values of:
+
+```
+w1, w2, ... , wn and b
+```
+
+---
+
+### Prediction
+
+Now we compute:
+
+```
+z = weighted combination of inputs (using learned w and b)
+```
+
+Then apply sigmoid:
+
+```
+y_pred = 1 / (1 + e^(-z))
+```
+
+---
+
+### Learning Behavior
+
+Gradient descent forms the weights and bias such that:
+
+* one class is pushed to one side
+* another class is pushed to the other side
+
+👉 forming a **linear decision boundary in feature space**
+
+---
+
+### Classification Rule
+
+```
+if y_pred >= 0.5:
+    class = 1
+else:
+    class = 2
+```
