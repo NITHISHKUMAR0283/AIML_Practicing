@@ -12,9 +12,10 @@ This project predicts the failure time of machines using regression models. The 
 
 ### Prediction vs Data Points
 
+
 The following figure shows the prediction line over the actual data points:
 
-![Prediction Line](figure_1.png)
+![Prediction Line](Figure_1.png)
 
 ### Covariance Matrix
 
