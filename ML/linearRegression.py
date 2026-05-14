@@ -1,14 +1,20 @@
 import numpy as np 
 import matplotlib.pyplot as plt
-
+from sklearn.datasets import fetch_california_housing
+from sklearn.metrics import r2_score
 from matplotlib import animation
 
-X = np.random.randint(1, 10, size=5)     
-Y = np.random.randint(-100, 0, size=5)
+data = fetch_california_housing()
+
+X = data.data[:, 0]   
+Y = data.target
+X = X[:200]  
+Y = Y[:200]
+
 X = (X - X.mean()) / X.std()
 Y = (Y - Y.mean()) / Y.std()
-w = np.random.random()
-b = np.random.random()
+w = 2
+b = 5
 
 epoch = 1000
 lr = 0.01
@@ -36,10 +42,8 @@ for i in range(epoch):
     b_history.append(b)
     loss_history.append(loss)
 
-    
-w_vals = np.linspace(-2, 2, 50)
-b_vals = np.linspace(-2, 2, 50)
-
+w_vals = np.linspace(-6, 6, 100)
+b_vals = np.linspace(-6, 6, 100)
 W, B = np.meshgrid(w_vals, b_vals)
 Z = np.zeros_like(W)
 
@@ -102,3 +106,4 @@ ani2 = animation.FuncAnimation(
 )
 
 plt.show()
+
