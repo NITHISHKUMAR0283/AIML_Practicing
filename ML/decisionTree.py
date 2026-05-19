@@ -1,8 +1,10 @@
 import numpy as np
-from sklearn.datasets import load_iris
+from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from graphviz import Digraph
-
+from sklearn.tree import DecisionTreeClassifier,plot_tree
+from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
 
 def split(feature, X, y, threshold):
     left_index = X[:, feature] <= threshold
@@ -135,7 +137,7 @@ def predict(X, head):
 
 
 
-data = load_iris()
+data = load_breast_cancer()
 X = data.data
 y = data.target
 feature_names = data.feature_names
@@ -144,16 +146,29 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-tree = construct_tree(X_train, y_train, depth=0, limit=5)
+model = construct_tree(X_train, y_train, depth=0, limit=4)
+
+buildin_model = DecisionTreeClassifier(criterion='gini',max_depth=4)
+buildin_model.fit(X_train,y_train)
+buildin_pred = buildin_model.predict(X_test)
+accuracy_building = accuracy_score(y_test,buildin_pred)
+print("accuracy of building sklearn model ",accuracy_building)
 
 predictions = []
 for i in range(len(X_test)):
-    predictions.append(predict(X_test[i], tree))
+    predictions.append(predict(X_test[i], model))
 
 predictions = np.array(predictions)
 
 accuracy = np.sum(predictions == y_test) / len(y_test)
 print("Accuracy:", accuracy)
 
-dot = visualize_tree(tree, feature_names)
+dot = visualize_tree(model, feature_names)
 dot.render("tree", format="png", view=True)
+
+plt.figure(figsize=(20,10))
+plot_tree(buildin_model,filled=True,
+          feature_names=feature_names,
+          class_names=data.target_names,
+          )
+plt.show()
