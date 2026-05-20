@@ -1,0 +1,5 @@
+Random Forest is an ensemble learning algorithm that combines many decision trees trained on different random samples and random feature subsets.
+
+A single Decision Tree can overfit because it greedily learns specific training patterns and has high variance. Random Forest reduces this variance by creating diverse trees using bagging and random feature selection, then combining their predictions through voting or averaging.
+
+This makes the model more stable, generalizable, and less sensitive to noise while still maintaining strong learning capability.
