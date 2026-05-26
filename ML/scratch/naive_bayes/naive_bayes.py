@@ -74,27 +74,18 @@ def predict(text):
     for labels,value in total_word.items():
         p_label = p_class(labels)
         join_pro_word = 0
-
         for word in text:
             p = joint_prob(labels,word)
             join_pro_word += math.log(p)
-
-        scores[labels] = math.log(p_label) + join_pro_word
-    
+        scores[labels] = math.log(p_label) + join_pro_word    
     max_log = max(scores.values())
-
     ham_exp = math.exp(scores[0] - max_log)
     spam_exp = math.exp(scores[1] - max_log)
-
     total_exp = ham_exp + spam_exp
-
     prob_ham = ham_exp / total_exp
     prob_spam = spam_exp / total_exp
-
-
     if prob_spam > prob_ham:
         return prob_spam, 1
-
     return prob_ham, 0
 correct = 0
 total = len(test_df)
