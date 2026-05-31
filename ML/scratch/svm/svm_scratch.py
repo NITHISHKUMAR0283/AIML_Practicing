@@ -7,9 +7,9 @@ from sklearn.svm import LinearSVC
 from sklearn.metrics import accuracy_score
 from sklearn.decomposition import PCA
 class SVM:
-    def __init__(self,learning_rate = 0.1,lambd = 0.5,n_iters=100):
+    def __init__(self,learning_rate = 0.1,c = 0.5,n_iters=100):
         self.lr = learning_rate
-        self.l = lambd
+        self.c = c
         self.n_iter = n_iters
         self.w = None
         self.b = None
@@ -24,11 +24,11 @@ class SVM:
             for idx,x_val in enumerate(X):
                 condition = y_[idx]*(np.dot(x_val,self.w)+self.b)>=1
 
-                if(condition):
-                    self.w = self.w- self.lr*(2*(self.l*self.w))
+                if condition:
+                    self.w = self.w - self.lr * self.w
                 else:
-                    self.w = self.w - self.lr*(2*self.l*self.w- y_[idx]*x_val)
-                    self.b = self.b - self.lr*(y_[idx])
+                    self.w = self.w - self.lr * (self.w - self.c * y_[idx] * x_val)
+                    self.b = self.b + self.lr * self.c * y_[idx]
     def predict(self,X):
         value = np.dot(X,self.w)+self.b
         return np.sign(value)
@@ -51,7 +51,7 @@ pca = PCA(n_components=2)
 X_train_2d = pca.fit_transform(X_train)
 X_test_2d = pca.transform(X_test)
 
-custom_svm = SVM(learning_rate=0.00000000009, lambd=0.0001, n_iters=3000)
+custom_svm = SVM(learning_rate=0.00001, c=200.0 ,n_iters=10000)
 custom_svm.fit(X_train_2d, y_train)
 
 sk_svm = LinearSVC()
@@ -89,7 +89,7 @@ def plot_boundary(ax, model, X, y, title, accuracy):
         alpha=0.9
     )
 
-    ax.set_title(f"{title}\nAccuracy = {accuracy:.4f}")
+    ax.set_title(f"{title}\nAccuracy = {accuracy:}")
     ax.set_xlabel("PCA Component 1")
     ax.set_ylabel("PCA Component 2")
 acc_custom = accuracy_score(y_test, y_pred_custom)
