@@ -13,7 +13,7 @@ This folder contains a minimal implementation of a linear Support Vector Machine
 
 The plot below shows how both models draw their decision boundaries. Our scratch SVM matches scikit-learn's output:
 
-![Decision Boundary Comparison](figure_1.png)
+![Decision Boundary Comparison](Figure_1.png)
 
 ## How to Run
 ```bash
