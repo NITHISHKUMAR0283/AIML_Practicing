@@ -77,5 +77,23 @@ with torch.no_grad():
         _,prediction = torch.max(output,1)
         total += label.size(0)
         correct += (prediction==label).sum().item()
+        
 accuracy = 100*correct/total
+model.eval()
+
+dummy_input = torch.randn(1, 28, 28)
+
+
+torch.onnx.export(
+    model,
+    dummy_input,
+    "mnist.onnx",
+    export_params=True,
+    opset_version=18,
+    do_constant_folding=True,
+    input_names=["input"],
+    output_names=["output"],
+    external_data=False
+)
+print("ONNX model exported successfully!")
 print(accuracy)
